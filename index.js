@@ -69,9 +69,9 @@ navArr.forEach((i) => {
   let a = document.createElement('a');
   a.classList.add('nav_item_link');
   a.innerText = i.title;
+  a.href = `./${i.title}.html`;
   /* trying setting href this way first 
     otherwise have and href in the array*/
-  a.href = `./${i.title}`;
   // will have to check if object has an array of submenus and then if it does loop thru the menu to get the items.
   // have to figure this out
   console.log(i.hasOwnProperty('submenu'));
@@ -86,20 +86,21 @@ navArr.forEach((i) => {
 
     /* Im testing to do it this way first, my function dont work right now and my brain dosent either, so it feels */
 
-    i.submenu.forEach((j) => { 
-    console.log('from nested array for submenu ' + j.subtitle);
-    // creating submenu item - li
-    let submenu_item = document.createElement('li');
-    submenu_item.classList.add('submenu_item');
+    i.submenu.forEach((j) => {
+      console.log('from nested array for submenu ' + j.subtitle);
+      // creating submenu item - li
+      let submenu_item = document.createElement('li');
+      submenu_item.classList.add('submenu_item');
 
-    // creating submenu item link - a
-    let submenu_item_link = document.createElement('a');
-    submenu_item_link.classList.add('submenu_item_link');
-    submenu_item_link.textContent = j.subtitle;
-    submenu_item.append(submenu_item_link);
+      // creating submenu item link - a
+      let submenu_item_link = document.createElement('a');
+      submenu_item_link.classList.add('submenu_item_link');
+      submenu_item_link.textContent = j.subtitle;
+      submenu_item_link.href = `./${j.subtitle}.html`;
+      submenu_item.append(submenu_item_link);
       submenu.append(submenu_item);
       li.append(a, submenu);
-    })
+    });
   } else {
     li.append(a);
   }
