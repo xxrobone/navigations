@@ -15,10 +15,18 @@
 .nav_item {
     padding: 0.5rem 1rem;
     background-color: black;
+}
 
+.nav_item:hover {
+    background-color: #282828;
 }
 
 .nav_item_link {
-    color: white;
+    text-decoration: none;
+    font-size: 1.4rem;
+    color: #ededed;
+}
 
+.nav_item:hover .nav_item_link {
+    color: rgb(185, 185, 185);
 }
