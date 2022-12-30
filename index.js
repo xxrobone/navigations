@@ -61,7 +61,8 @@ let nav_menu = document.querySelector('.nav_menu');
 /* if (Array.isArray(navArr) && navArr !== undefined && navArr !== null) { */
 navArr.forEach((i) => {
   let subArr = [];
-  let submenu_menu;
+  let submenu = document.createElement('ul');
+  submenu.classList.add('submenu');
 
   let li = document.createElement('li');
   li.classList.add('nav_item');
@@ -79,12 +80,26 @@ navArr.forEach((i) => {
     subArr.forEach((j) => {
       console.log(j.subtitle);
     });
-    submenu_menu = createSubmenu(subArr);
   }
   if (i.hasOwnProperty('submenu')) {
     console.log('has submenu');
 
-    li.append(a);
+    /* Im testing to do it this way first, my function dont work right now and my brain dosent either, so it feels */
+
+    i.submenu.forEach((j) => { 
+    console.log('from nested array for submenu ' + j.subtitle);
+    // creating submenu item - li
+    let submenu_item = document.createElement('li');
+    submenu_item.classList.add('submenu_item');
+
+    // creating submenu item link - a
+    let submenu_item_link = document.createElement('a');
+    submenu_item_link.classList.add('submenu_item_link');
+    submenu_item_link.textContent = j.subtitle;
+    submenu_item.append(submenu_item_link);
+      submenu.append(submenu_item);
+      li.append(a, submenu);
+    })
   } else {
     li.append(a);
   }
@@ -94,19 +109,19 @@ navArr.forEach((i) => {
 /* } else {
   console.log('no array found');
 } */
-
+/* 
 function createSubmenu(arr) {
-  // creating submenu - ul
+  
   let submenu = document.createElement('ul');
   submenu.classList.add('submenu');
 
   arr.forEach((j) => {
     console.log('this is from createSubmenu func ' + j.subtitle);
-    // creating submenu item - li
+   
     let submenu_item = document.createElement('li');
     submenu_item.classList.add('submenu_item');
 
-    // creating submenu item link - a
+    
     let submenu_item_link = document.createElement('a');
     submenu_item_link.classList.add('submenu_item_link');
     submenu_item_link.textContent = j.subtitle;
@@ -123,7 +138,7 @@ function createSubmenu(arr) {
     );
     return submenu;
   });
-}
+} */
 
 // function to check if an object is an array
 
