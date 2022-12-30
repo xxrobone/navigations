@@ -58,24 +58,9 @@ subtitle 3 = ${sub_title3}
 
 let nav_menu = document.querySelector('.nav_menu');
 
-// program to check if an object is an array
-
-function checkObject(arr) {
-
-    // check if arr is array
-    const result = Array.isArray(arr);
-
-    if(result) {
-        console.log(`[${arr}] is an array.`);
-    }
-    else {
-        console.log(`${arr} is not an array.`);
-    }
-
-}
-
 /* if (Array.isArray(navArr) && navArr !== undefined && navArr !== null) { */
 navArr.forEach((i) => {
+  let subArr = [];
   let li = document.createElement('li');
   li.classList.add('nav_item');
   let a = document.createElement('a');
@@ -89,7 +74,19 @@ navArr.forEach((i) => {
 
   // will have to check if object has an array of submenus and then if it does loop thru the menu to get the items.
   // have to figure this out
-    console.log(i.hasOwnProperty('submenu'));
+  console.log(i.hasOwnProperty('submenu'));
+  if ('submenu' in i) {
+      subArr = Array.from(i.submenu);
+      let submenu_ul = createSubmenu(subArr)
+    console.log(subArr);
+    subArr.forEach((j) => {
+        console.log(j.subtitle);
+    });
+    }
+    if (i.hasOwnProperty('submenu')) {
+        console.log('has submen')
+    }
+    
 });
 
 /* } else {
@@ -97,11 +94,36 @@ navArr.forEach((i) => {
 } */
 
 function createSubmenu(arr) {
-    let submenu = createElement('ul')
-    submenu.classList.add('submenu')
-    let submenu_item = createElement('li')
-    submenu_item.textContent.classList.add('submenu_item') 
-    let submenu_item_link = createElement('a')
-    sub_menu_item_link.classList.add('submenu_item_link')
-    submenu_item_link.textContent = arr.subtitle
+  // creating submenu - ul
+  let submenu = document.createElement('ul');
+  submenu.classList.add('submenu');
+
+  arr.forEach((j) => {
+    console.log('this is from createSubmenu func ' + j.subtitle);
+    // creating submenu item - li
+    let submenu_item = document.createElement('li');
+    submenu_item.classList.add('submenu_item');
+
+    // creating submenu item link - a
+    let submenu_item_link = document.createElement('a');
+    submenu_item_link.classList.add('submenu_item_link');
+    submenu_item_link.textContent = j.subtitle;
+    submenu_item.append(submenu_item_link);
+
+    submenu.append(submenu_item);
+  });
 }
+
+
+// function to check if an object is an array
+
+function checkObject(arr) {
+  
+    const result = Array.isArray(arr);
+  
+    if (result) {
+      console.log(`[${arr}] is an array.`);
+    } else {
+      console.log(`${arr} is not an array.`);
+    }
+  }
