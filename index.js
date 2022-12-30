@@ -61,32 +61,34 @@ let nav_menu = document.querySelector('.nav_menu');
 /* if (Array.isArray(navArr) && navArr !== undefined && navArr !== null) { */
 navArr.forEach((i) => {
   let subArr = [];
+  let submenu_menu;
+
   let li = document.createElement('li');
   li.classList.add('nav_item');
   let a = document.createElement('a');
   a.classList.add('nav_item_link');
   a.innerText = i.title;
   /* trying setting href this way first 
-      otherwise have and href in the array*/
+    otherwise have and href in the array*/
   a.href = `./${i.title}`;
-  li.append(a);
-  nav_menu.append(li);
-
   // will have to check if object has an array of submenus and then if it does loop thru the menu to get the items.
   // have to figure this out
   console.log(i.hasOwnProperty('submenu'));
   if ('submenu' in i) {
-      subArr = Array.from(i.submenu);
-      let submenu_ul = createSubmenu(subArr)
-    console.log(subArr);
+    subArr = Array.from(i.submenu);
     subArr.forEach((j) => {
-        console.log(j.subtitle);
+      console.log(j.subtitle);
     });
-    }
-    if (i.hasOwnProperty('submenu')) {
-        console.log('has submen')
-    }
-    
+    submenu_menu = createSubmenu(subArr);
+  }
+  if (i.hasOwnProperty('submenu')) {
+    console.log('has submenu');
+
+    li.append(a);
+  } else {
+    li.append(a);
+  }
+  nav_menu.append(li);
 });
 
 /* } else {
@@ -111,19 +113,26 @@ function createSubmenu(arr) {
     submenu_item.append(submenu_item_link);
 
     submenu.append(submenu_item);
+    console.log(
+      'this is submenu ' +
+        submenu +
+        'submenulist : ' +
+        submenu_item +
+        'sub link : ' +
+        submenu_item_link.textContent
+    );
+    return submenu;
   });
 }
-
 
 // function to check if an object is an array
 
 function checkObject(arr) {
-  
-    const result = Array.isArray(arr);
-  
-    if (result) {
-      console.log(`[${arr}] is an array.`);
-    } else {
-      console.log(`${arr} is not an array.`);
-    }
+  const result = Array.isArray(arr);
+
+  if (result) {
+    console.log(`[${arr}] is an array.`);
+  } else {
+    console.log(`${arr} is not an array.`);
   }
+}
