@@ -58,6 +58,22 @@ subtitle 3 = ${sub_title3}
 
 let nav_menu = document.querySelector('.nav_menu');
 
+// program to check if an object is an array
+
+function checkObject(arr) {
+
+    // check if arr is array
+    const result = Array.isArray(arr);
+
+    if(result) {
+        console.log(`[${arr}] is an array.`);
+    }
+    else {
+        console.log(`${arr} is not an array.`);
+    }
+
+}
+
 /* if (Array.isArray(navArr) && navArr !== undefined && navArr !== null) { */
 navArr.forEach((i) => {
   let li = document.createElement('li');
@@ -73,8 +89,19 @@ navArr.forEach((i) => {
 
   // will have to check if object has an array of submenus and then if it does loop thru the menu to get the items.
   // have to figure this out
+    console.log(i.hasOwnProperty('submenu'));
 });
 
 /* } else {
   console.log('no array found');
 } */
+
+function createSubmenu(arr) {
+    let submenu = createElement('ul')
+    submenu.classList.add('submenu')
+    let submenu_item = createElement('li')
+    submenu_item.textContent.classList.add('submenu_item') 
+    let submenu_item_link = createElement('a')
+    sub_menu_item_link.classList.add('submenu_item_link')
+    submenu_item_link.textContent = arr.subtitle
+}

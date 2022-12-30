@@ -15,6 +15,7 @@
 }
 
 .nav_item {
+    position: relative;
     padding: 0.5rem 1rem;
     background-color: black;
 }
@@ -35,4 +36,10 @@
 
 .nav.open {
     display: block;
+}
+
+.nav_item > .submenu {
+    position: absolute;
+    top: 0;
+    display: flex;
 }
