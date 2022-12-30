@@ -1,3 +1,6 @@
+@import url('./hamburger.css');
+@import url('./nav.css');
+
 * {
     margin: 0;
     padding: 0;
