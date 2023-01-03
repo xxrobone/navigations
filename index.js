@@ -47,10 +47,10 @@ listenChangesinArray(navArr, call)
 Object.defineProperty(navArr, 'push', {
   configurable: true,
   enumerable: false,
-  writable: true, // Previous values based on Object.getOwnPropertyDescriptor(Array.prototype, "push")
+  writable: true, 
+  
   value: function (...args) {
-    let result = Array.prototype.push.apply(this, args); // Original push() implementation based on https://github.com/vuejs/vue/blob/f2b476d4f4f685d84b4957e6c805740597945cde/src/core/observer/array.js and https://github.com/vuejs/vue/blob/daed1e73557d57df244ad8d46c9afff7208c9a2d/src/core/util/lang.js
-
+    let result = Array.prototype.push.apply(this, args);
     changeNavData();
     console.log(result);
     return result; // Original push() implementation
