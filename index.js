@@ -1,24 +1,5 @@
 console.log('always check connection');
 
-// test
-const data = {
-  code: 42,
-  items: [
-    {
-      id: 1,
-      name: 'foo',
-    },
-    {
-      id: 2,
-      name: 'bar',
-    },
-  ],
-};
-
-const item_name = data.items[1].name;
-console.log(item_name);
-console.log(data.items[1]);
-
 const navArr = [
   {
     title: 'home',
@@ -47,25 +28,74 @@ const navArr = [
   },
 ];
 
-const sub_title1 = navArr[2].submenu[0].subtitle;
-const sub_title2 = navArr[2].submenu[1].subtitle;
-const sub_title3 = navArr[2].submenu[2].subtitle;
-console.log(`
-subtitle 1 = ${sub_title1} \n
-subtitle 2 = ${sub_title2} \n
-subtitle 3 = ${sub_title3}
-`);
+// so to listen for more changes, I have to create an function that listens to alla and then create functions that is called on depending on what changes is made
+/* 
+function listenToAllArrayChanges(arr, callback){
+ ['pop','push','reverse','shift','unshift','splice','sort'].forEach((m)=>{
+     arr[m] = function(){
+                  var res = Array.prototype[m].apply(arr, arguments);  // call normal behaviour
+                  callback.apply(arr, arguments);  // finally call the callback supplied
+                  return res;
+              }
+ });
+}
 
-let nav_menu = document.querySelector('.nav_menu');
+listenChangesinArray(navArr, call)
+
+*/
+
+Object.defineProperty(navArr, 'push', {
+  configurable: true,
+  enumerable: false,
+  writable: true, // Previous values based on Object.getOwnPropertyDescriptor(Array.prototype, "push")
+  value: function (...args) {
+    let result = Array.prototype.push.apply(this, args); // Original push() implementation based on https://github.com/vuejs/vue/blob/f2b476d4f4f685d84b4957e6c805740597945cde/src/core/observer/array.js and https://github.com/vuejs/vue/blob/daed1e73557d57df244ad8d46c9afff7208c9a2d/src/core/util/lang.js
+
+    changeNavData();
+    console.log(result);
+    return result; // Original push() implementation
+  },
+});
+
+Object.defineProperty(navArr, 'pop', {
+  configurable: true,
+  enumerable: false,
+  writable: true, 
+
+  value: function () {
+    Array.prototype.pop();
+
+    changeNavData();
+  },
+});
+
+/* my testing example
+
+navArr.push({title: 'new 2', href: '', cls: '.nav_item', submenu: [{subtitle: 'proj4'}, {subtitle: 'proj5'}]}) 
+
+*/
+
+/* 
+let arr = navArr;
+let _push = arr.push;
+arr.push = function () {
+  for (var n in arguments) {
+    console.log(arguments[n]);
+  }
+  console.log('pushing new arguments');
+  funcToExecute();
+  return _push.apply(this, arguments);
+}; */
+
+let navMenu = document.querySelector('.nav_menu');
 
 function createNav(navArr) {
-
   if (Array.isArray(navArr) && navArr !== undefined && navArr !== null) {
     navArr.forEach((i) => {
       let subArr = [];
       let submenu = document.createElement('ul');
       submenu.classList.add('submenu');
-  
+
       let li = document.createElement('li');
       li.classList.add('nav_item');
       let a = document.createElement('a');
@@ -79,21 +109,21 @@ function createNav(navArr) {
       console.log(i.hasOwnProperty('submenu'));
       if ('submenu' in i) {
         subArr = Array.from(i.submenu);
-        subArr.forEach((j) => {
+        /*  subArr.forEach((j) => {
           console.log(j.subtitle);
-        });
+        }); */
       }
       if (i.hasOwnProperty('submenu')) {
-        console.log('has submenu');
-  
+        /*  console.log('has submenu'); */
+
         /* Im testing to do it this way first, my function dont work right now and my brain dosent either, so it feels */
-  
+
         i.submenu.forEach((j) => {
-          console.log('from nested array for submenu ' + j.subtitle);
+          /*  console.log('from nested array for submenu ' + j.subtitle); */
           // creating submenu item - li
           let submenu_item = document.createElement('li');
           submenu_item.classList.add('submenu_item');
-  
+
           // creating submenu item link - a
           let submenu_item_link = document.createElement('a');
           submenu_item_link.classList.add('submenu_item_link');
@@ -106,17 +136,24 @@ function createNav(navArr) {
       } else {
         li.append(a);
       }
-      nav_menu.append(li);
+      navMenu.append(li);
     });
   } else {
     console.log('no array found');
   }
 }
 
-createNav(navArr)
+createNav(navArr);
 
+function removeNavHTML() {
+  navMenu.innerHTML = '';
+}
 
-
+function changeNavData() {
+  console.log('changes has been made');
+  removeNavHTML();
+  createNav(navArr);
+}
 
 /* 
 function createSubmenu(arr) {
@@ -150,7 +187,7 @@ function createSubmenu(arr) {
 } */
 
 // function to check if an object is an array
-
+/* 
 function checkObject(arr) {
   const result = Array.isArray(arr);
 
@@ -160,3 +197,4 @@ function checkObject(arr) {
     console.log(`${arr} is not an array.`);
   }
 }
+ */
