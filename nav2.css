@@ -1,4 +1,4 @@
-@import url('./hamburger.css');
+@import url('./hamburger2.css');
 
 body {
     margin: 0;
@@ -191,5 +191,10 @@ nav > ul > li:hover > a {
     left: -40px;
     display: none;
     flex-direction: column;
+}
+
+.nav_item:hover .submenu {
+    display: flex;
+    margin-left: 0rem;
 }
 }
