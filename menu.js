@@ -1,4 +1,37 @@
-console.log('always check connection');
+let menuBtn = document.querySelector('#hamburger');
+let menu = document.querySelector('.menu');
+let links = document.querySelectorAll('nav > ul > li');
+let nav = document.querySelector('nav');
+
+menuBtn.addEventListener('click', () => {
+  console.log('clicked button');
+  menuBtn.classList.toggle('active');
+  menu.classList.toggle('open');
+  /* 
+  links.forEach((link, index) => {
+    if (link.style.animation) {
+      link.style.animation = '';
+    } else {
+      link.style.animation = `liFadeIn 0.3s ease-in forwards ${
+        index / 8 + 0.5
+      }s`;
+    }
+  }); */
+});
+
+if (window.innerWidth > 768) {
+  var prevScrollpos = window.pageYOffset;
+  window.onscroll = function () {
+    var currentScrollpos = window.pageYOffset;
+    if (prevScrollpos > currentScrollpos) {
+      nav.style.top = '60px';
+    } else {
+      nav.style.top = '0px';
+    }
+
+    prevScrollpos = currentScrollpos;
+  };
+}
 
 const navArr = [
   {
@@ -12,7 +45,7 @@ const navArr = [
     cls: '.nav_item',
   },
   {
-    title: 'work',
+    title: 'projects',
     href: '',
     cls: '.nav_item',
     submenu: [
@@ -27,22 +60,6 @@ const navArr = [
     cls: '.nav_item',
   },
 ];
-
-// so to listen for more changes, I have to create an function that listens to alla and then create functions that is called on depending on what changes is made
-/* 
-function listenToAllArrayChanges(arr, callback){
- ['pop','push','reverse','shift','unshift','splice','sort'].forEach((m)=>{
-     arr[m] = function(){
-                  var res = Array.prototype[m].apply(arr, arguments);  // call normal behaviour
-                  callback.apply(arr, arguments);  // finally call the callback supplied
-                  return res;
-              }
- });
-}
-
-listenChangesinArray(navArr, call)
-
-*/
 
 Object.defineProperty(navArr, 'push', {
   configurable: true,
@@ -68,14 +85,6 @@ Object.defineProperty(navArr, 'pop', {
     changeNavData();
   },
 });
-
-/* my testing example
-
-navArr.push({title: 'New', href: '', cls: '.nav_item', submenu: [{subtitle: 'proj4'}, {subtitle: 'proj5'}]}) 
-
-*/
-
-let navMenu = document.querySelector('.nav_menu');
 
 function createNav(navArr) {
   if (Array.isArray(navArr) && navArr !== undefined && navArr !== null) {
@@ -124,7 +133,7 @@ function createNav(navArr) {
       } else {
         li.append(a);
       }
-      navMenu.append(li);
+      menu.append(li);
     });
   } else {
     console.log('no array found');
@@ -134,7 +143,7 @@ function createNav(navArr) {
 createNav(navArr);
 
 function removeNavHTML() {
-  navMenu.innerHTML = '';
+  menu.innerHTML = '';
 }
 
 function changeNavData() {
